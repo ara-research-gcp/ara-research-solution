@@ -7,66 +7,190 @@
   <meta name="description" content="Ara Research – AI-driven receivables automation platform built on Google Cloud." />
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #f3f4f6;
+      --card-bg: #ffffff;
+      --text-main: #111827;
+      --text-muted: #6b7280;
+      --primary: #2563eb;
+      --primary-soft: #dbeafe;
+      --border-subtle: #e5e7eb;
+      --radius-lg: 0.9rem;
+      --shadow-soft: 0 14px 45px rgba(15, 23, 42, 0.10);
+    }
     body {
       font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       line-height: 1.6;
-      color: #111827;
-      background: #f3f4f6;
+      color: var(--text-main);
+      background: radial-gradient(circle at top left, #e0ecff 0, #f9fafb 45%, #eef2ff 100%);
+      -webkit-font-smoothing: antialiased;
     }
-    a { color: #2563eb; text-decoration: none; }
+    a { color: var(--primary); text-decoration: none; }
     a:hover { text-decoration: underline; }
 
-    header {
-      background: radial-gradient(circle at top left, #0f172a, #020617);
-      color: white;
-      padding: 3rem 1.5rem 2.5rem;
+    /* Layout */
+    .page {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
     }
     .container {
-      max-width: 960px;
+      max-width: 1040px;
       margin: 0 auto;
-    }
-    .badge {
-      display: inline-block;
-      padding: 0.2rem 0.6rem;
-      border-radius: 999px;
-      font-size: 0.75rem;
-      letter-spacing: 0.04em;
-      text-transform: uppercase;
-      background: rgba(148, 163, 184, 0.25);
-      border: 1px solid rgba(148, 163, 184, 0.5);
-    }
-    .hero-title {
-      font-size: clamp(2rem, 4vw, 2.6rem);
-      margin-top: 1rem;
-      margin-bottom: 0.75rem;
-    }
-    .hero-subtitle {
-      max-width: 640px;
-      font-size: 0.98rem;
-      color: #e5e7eb;
-    }
-    .hero-meta {
-      margin-top: 1rem;
-      font-size: 0.85rem;
-      color: #cbd5f5;
+      padding: 0 1.5rem;
     }
 
+    /* Header */
+    header {
+      padding: 1.5rem 0 2.25rem;
+      position: relative;
+      overflow: hidden;
+    }
+    header::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at top left, rgba(37, 99, 235, 0.18), transparent 55%);
+      opacity: 0.9;
+      pointer-events: none;
+    }
+    .header-inner {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      gap: 1.75rem;
+      animation: fadeInDown 700ms ease-out forwards;
+      opacity: 0;
+      transform: translateY(10px);
+    }
+
+    /* Logo + title row */
+    .brand-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1.25rem;
+      flex-wrap: wrap;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 0.9rem;
+    }
+    .logo-circle {
+      width: 44px;
+      height: 44px;
+      border-radius: 999px;
+      background: radial-gradient(circle at 25% 20%, #60a5fa, #1d4ed8);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 12px 25px rgba(37, 99, 235, 0.4);
+      position: relative;
+      overflow: hidden;
+    }
+    .logo-circle::after {
+      /* small moving highlight */
+      content: "";
+      position: absolute;
+      width: 90%;
+      height: 90%;
+      border-radius: inherit;
+      background: radial-gradient(circle at 0 0, rgba(255, 255, 255, 0.35), transparent 60%);
+      transform: translate(-30%, -30%);
+      animation: sheen 4s ease-in-out infinite;
+      pointer-events: none;
+    }
+    .logo-text {
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      color: #eff6ff;
+    }
+    .brand-title {
+      display: flex;
+      flex-direction: column;
+      gap: 0.15rem;
+    }
+    .brand-title h1 {
+      font-size: clamp(1.9rem, 3.4vw, 2.5rem);
+    }
+    .brand-sub {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      max-width: 420px;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.25rem 0.7rem;
+      border-radius: 999px;
+      font-size: 0.72rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      background: rgba(37, 99, 235, 0.06);
+      border: 1px solid rgba(37, 99, 235, 0.22);
+      color: #1d4ed8;
+    }
+    .badge-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 999px;
+      background: #22c55e;
+      box-shadow: 0 0 0 4px rgba(34, 197, 94, 0.25);
+    }
+
+    .hero-copy {
+      max-width: 680px;
+      font-size: 0.98rem;
+      color: #374151;
+    }
+    .hero-meta {
+      margin-top: 0.5rem;
+      font-size: 0.86rem;
+      color: #4b5563;
+    }
+
+    /* Main sections */
     main {
-      padding: 2.5rem 1.5rem 3rem;
+      flex: 1;
+      padding: 0 0 3rem;
     }
     section {
-      background: white;
-      border-radius: 0.75rem;
-      padding: 1.75rem 1.5rem;
-      box-shadow: 0 8px 24px rgba(15, 23, 42, 0.06);
-      margin-bottom: 1.5rem;
+      background: var(--card-bg);
+      border-radius: var(--radius-lg);
+      padding: 1.8rem 1.6rem;
+      box-shadow: var(--shadow-soft);
+      margin-bottom: 1.6rem;
+      border: 1px solid rgba(148, 163, 184, 0.25);
+      opacity: 0;
+      transform: translateY(10px);
+      transition: opacity 500ms ease-out, transform 500ms ease-out, box-shadow 200ms ease-out, transform 200ms ease-out;
+    }
+    section.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    section:hover {
+      box-shadow: 0 18px 45px rgba(15, 23, 42, 0.16);
+      transform: translateY(-2px);
     }
     section h2 {
       font-size: 1.15rem;
       margin-bottom: 0.75rem;
       color: #0f172a;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
     }
-    p { margin-bottom: 0.6rem; font-size: 0.95rem; }
+    section h2 span.tag {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-muted);
+    }
+    p { margin-bottom: 0.6rem; font-size: 0.95rem; color: #111827; }
 
     .grid {
       display: grid;
@@ -78,32 +202,103 @@
 
     ul {
       margin-left: 1.2rem;
-      font-size: 0.95rem;
+      font-size: 0.93rem;
+      color: #111827;
     }
     li { margin-bottom: 0.35rem; }
 
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      padding: 0.2rem 0.7rem;
+      border-radius: 999px;
+      background: var(--primary-soft);
+      color: #1d4ed8;
+      font-size: 0.78rem;
+    }
+
     footer {
-      padding: 1.5rem;
+      padding: 1.5rem 1.5rem 2rem;
       font-size: 0.85rem;
       text-align: center;
-      color: #6b7280;
+      color: var(--text-muted);
+    }
+
+    /* Architecture diagram container */
+    .diagram-wrapper {
+      margin-top: 0.8rem;
+      padding: 0.9rem;
+      border-radius: 0.75rem;
+      background: linear-gradient(145deg, #eff6ff, #f9fafb);
+      border: 1px solid #dbeafe;
+      overflow-x: auto;
+    }
+    .diagram-caption {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      margin-top: 0.4rem;
+    }
+    svg {
+      max-width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    /* Animations */
+    @keyframes sheen {
+      0% { transform: translate(-40%, -40%) rotate(0deg); opacity: 0.8; }
+      50% { transform: translate(10%, 10%) rotate(8deg); opacity: 0.5; }
+      100% { transform: translate(-40%, -40%) rotate(0deg); opacity: 0.8; }
+    }
+    @keyframes fadeInDown {
+      from { opacity: 0; transform: translateY(16px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    code {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      background: #f3f4f6;
+      padding: 0.12rem 0.35rem;
+      border-radius: 0.35rem;
+      font-size: 0.82rem;
     }
   </style>
 </head>
 <body>
+<div class="page">
   <header>
     <div class="container">
-      <span class="badge">Ara Research · Solution Overview</span>
-      <h1 class="hero-title">AI-Driven Receivables Automation on Google Cloud</h1>
-      <p class="hero-subtitle">
-        Ara Research builds an AI-powered receivables management platform that automates
-        customer outreach, negotiation, and repayment workflows, enabling fair, scalable,
-        and efficient collections for financial institutions and service providers.
-      </p>
-      <p class="hero-meta">
-        Contact: <a href="mailto:koen@ara-research.work">koen@ara-research.work</a> ·
-        Website: <a href="https://ara-research.work" target="_blank">ara-research.work</a>
-      </p>
+      <div class="header-inner">
+        <div class="brand-row">
+          <div class="brand">
+            <div class="logo-circle">
+              <span class="logo-text">AR</span>
+            </div>
+            <div class="brand-title">
+              <h1>Ara Research · AI Receivables Automation</h1>
+              <p class="brand-sub">
+                Cloud-native platform that turns adversarial debt collection into a supportive,
+                AI-assisted repayment journey for lenders and their customers.
+              </p>
+            </div>
+          </div>
+          <div class="badge">
+            <span class="badge-dot"></span>
+            <span>Google Cloud Solution Overview</span>
+          </div>
+        </div>
+        <div class="hero-copy">
+          <p>
+            Ara Research builds an AI-powered receivables management platform that automates
+            customer outreach, negotiation, and repayment workflows. The solution uses Google Cloud
+            to deliver secure, scalable and compliant collections experiences across web, mobile,
+            and messaging channels.
+          </p>
+          <p class="hero-meta">
+            Contact: <a href="mailto:koen@ara-research.work">koen@ara-research.work</a> ·
+            Website: <a href="https://ara-research.work" target="_blank" rel="noopener">ara-research.work</a>
+          </p>
+        </div>
+      </div>
     </div>
   </header>
 
@@ -111,10 +306,10 @@
     <div class="container">
 
       <section id="vision">
-        <h2>Vision &amp; Mission</h2>
+        <h2>Vision &amp; Mission <span class="tag">Context</span></h2>
         <p>
           We envision a world where individuals enjoy the financial freedom to thrive as their
-          lives are transformed by AI, while our clients efficiently manage their receivables.
+          lives are supported by AI, while our clients efficiently manage their receivables.
           Our mission is to enable seamless and fair repayment experiences that benefit both
           lenders and their customers. Through 24/7 intelligent virtual agents, individuals
           can create personalized, sustainable repayment plans that promote financial progress
@@ -123,7 +318,7 @@
       </section>
 
       <section id="solution">
-        <h2>Solution Overview</h2>
+        <h2>Solution Overview <span class="tag">Product</span></h2>
         <p>
           Ara AI Receivables Automation Platform is a cloud-native solution that automates
           end-to-end receivable management workflows, including customer outreach, payment
@@ -140,9 +335,9 @@
       </section>
 
       <section id="google-cloud">
-        <h2>Built on Google Cloud</h2>
+        <h2>How the Solution Uses Google Cloud <span class="tag">Architecture</span></h2>
         <p>
-          The solution is designed and operated on Google Cloud to achieve security,
+          The platform is designed and operated on Google Cloud to achieve security,
           scalability, and rapid iteration:
         </p>
         <ul>
@@ -173,11 +368,132 @@
         </ul>
       </section>
 
+      <section id="diagram">
+        <h2>Solution Architecture Diagram <span class="tag">Reference</span></h2>
+        <p>
+          The following high-level diagram summarizes how user channels, application services,
+          AI components and data layers are connected on Google Cloud.
+        </p>
+
+        <div class="diagram-wrapper">
+          <!-- Simple SVG architecture diagram -->
+          <svg viewBox="0 0 950 340" role="img" aria-labelledby="archTitle archDesc">
+            <title id="archTitle">Ara Research – Google Cloud Architecture</title>
+            <desc id="archDesc">
+              Channels connect to API services on Cloud Run and Cloud Functions, which call
+              Vertex AI and Dialogflow CX for intelligence. Data is stored in BigQuery, Cloud SQL
+              and Cloud Storage, and the platform integrates with external lender systems.
+            </desc>
+
+            <defs>
+              <linearGradient id="gradChannel" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#bfdbfe" />
+                <stop offset="100%" stop-color="#eff6ff" />
+              </linearGradient>
+              <linearGradient id="gradService" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#dbeafe" />
+                <stop offset="100%" stop-color="#bfdbfe" />
+              </linearGradient>
+              <linearGradient id="gradData" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#e0f2fe" />
+                <stop offset="100%" stop-color="#fee2e2" />
+              </linearGradient>
+              <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5"
+                      markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+                <path d="M 0 0 L 10 5 L 0 10 z" fill="#6b7280" />
+              </marker>
+            </defs>
+
+            <!-- Channel group -->
+            <rect x="30" y="40" width="190" height="110" rx="12" fill="url(#gradChannel)" stroke="#93c5fd" />
+            <text x="125" y="60" text-anchor="middle" font-size="13" fill="#111827" font-weight="600">
+              Customer Channels
+            </text>
+            <text x="125" y="82" text-anchor="middle" font-size="11" fill="#374151">
+              Web · Mobile · Messaging
+            </text>
+            <text x="125" y="102" text-anchor="middle" font-size="11" fill="#374151">
+              (WhatsApp / SMS / Email)
+            </text>
+
+            <!-- API / Services -->
+            <rect x="305" y="40" width="220" height="110" rx="12" fill="url(#gradService)" stroke="#60a5fa" />
+            <text x="415" y="60" text-anchor="middle" font-size="13" fill="#111827" font-weight="600">
+              Application &amp; API Layer
+            </text>
+            <text x="415" y="82" text-anchor="middle" font-size="11" fill="#374151">
+              Cloud Run · Cloud Functions
+            </text>
+            <text x="415" y="102" text-anchor="middle" font-size="11" fill="#374151">
+              Webhooks · Integrations · Orchestration
+            </text>
+
+            <!-- AI layer -->
+            <rect x="610" y="22" width="270" height="140" rx="12" fill="#fef9c3" stroke="#facc15" />
+            <text x="745" y="44" text-anchor="middle" font-size="13" fill="#111827" font-weight="600">
+              AI &amp; Conversation Layer
+            </text>
+            <text x="745" y="68" text-anchor="middle" font-size="11" fill="#374151">
+              Vertex AI models (decision &amp; scoring)
+            </text>
+            <text x="745" y="88" text-anchor="middle" font-size="11" fill="#374151">
+              Dialogflow CX conversational flows
+            </text>
+            <text x="745" y="108" text-anchor="middle" font-size="11" fill="#374151">
+              Policy checks · Offer generation
+            </text>
+
+            <!-- Data layer -->
+            <rect x="245" y="210" width="310" height="110" rx="12" fill="url(#gradData)" stroke="#38bdf8" />
+            <text x="400" y="230" text-anchor="middle" font-size="13" fill="#111827" font-weight="600">
+              Data &amp; Analytics Layer
+            </text>
+            <text x="400" y="252" text-anchor="middle" font-size="11" fill="#374151">
+              BigQuery – behavioural &amp; portfolio analytics
+            </text>
+            <text x="400" y="272" text-anchor="middle" font-size="11" fill="#374151">
+              Cloud SQL – operational &amp; configuration data
+            </text>
+            <text x="400" y="292" text-anchor="middle" font-size="11" fill="#374151">
+              Cloud Storage – exports, reports, documents
+            </text>
+
+            <!-- External systems -->
+            <rect x="610" y="210" width="270" height="110" rx="12" fill="#f9fafb" stroke="#cbd5f5" />
+            <text x="745" y="230" text-anchor="middle" font-size="13" fill="#111827" font-weight="600">
+              External Systems
+            </text>
+            <text x="745" y="252" text-anchor="middle" font-size="11" fill="#374151">
+              Loan management systems
+            </text>
+            <text x="745" y="272" text-anchor="middle" font-size="11" fill="#374151">
+              Payment gateways &amp; banks
+            </text>
+            <text x="745" y="292" text-anchor="middle" font-size="11" fill="#374151">
+              CRM / Support platforms
+            </text>
+
+            <!-- Arrows -->
+            <line x1="220" y1="95" x2="300" y2="95" stroke="#6b7280" stroke-width="1.4" marker-end="url(#arrow)" />
+            <line x1="525" y1="95" x2="605" y2="95" stroke="#6b7280" stroke-width="1.4" marker-end="url(#arrow)" />
+            <line x1="415" y1="150" x2="415" y2="205" stroke="#6b7280" stroke-width="1.4" marker-end="url(#arrow)" />
+            <line x1="555" y1="265" x2="605" y2="265" stroke="#6b7280" stroke-width="1.4" marker-end="url(#arrow)" />
+          </svg>
+
+          <p class="diagram-caption">
+            Channels connect through <strong>Cloud Run / Cloud Functions</strong> to the AI layer
+            (<strong>Vertex AI</strong>, <strong>Dialogflow CX</strong>). Data is stored in
+            <strong>BigQuery</strong>, <strong>Cloud SQL</strong> and <strong>Cloud Storage</strong>,
+            while integrations connect to external lender and payment systems.
+          </p>
+        </div>
+      </section>
+
       <section id="benefits">
-        <h2>Key Benefits &amp; Impact</h2>
+        <h2>Key Benefits &amp; Impact <span class="tag">Outcomes</span></h2>
         <div class="grid grid-2">
           <div>
-            <p><strong>For clients (lenders &amp; service providers)</strong></p>
+            <p><span class="pill">For clients – lenders &amp; service providers</span></p>
             <ul>
               <li>Increase collections efficiency while reducing operational cost.</li>
               <li>Scale to thousands of concurrent conversations with virtual agents.</li>
@@ -186,7 +502,7 @@
             </ul>
           </div>
           <div>
-            <p><strong>For customers in debt</strong></p>
+            <p><span class="pill">For customers in debt</span></p>
             <ul>
               <li>Access 24/7 self-service portals for payments and plan adjustments.</li>
               <li>Receive fair, transparent, and empathetic communication.</li>
@@ -197,31 +513,18 @@
         </div>
       </section>
 
-      <section id="architecture">
-        <h2>High-Level Architecture</h2>
-        <p>
-          Frontend channels (web, mobile, messaging) connect to Ara’s API layer running on
-          Cloud Run. Incoming events are routed to Dialogflow CX and Vertex AI models, which
-          determine the next best action: offer, negotiation path, or escalation. Workflow
-          logic is implemented through Cloud Functions that interact with external lender
-          systems, payment processors, and data sources. Aggregated interaction and repayment
-          data is streamed into BigQuery for reporting and analytics, enabling continuous
-          improvement of models and strategies.
-        </p>
-      </section>
-
       <section id="contact">
-        <h2>Contact &amp; Additional Information</h2>
+        <h2>Contact &amp; Additional Information <span class="tag">Info</span></h2>
         <p>
-          For more information about Ara Research and the AI Receivables Automation Platform:
+          For more details about Ara Research and the AI Receivables Automation Platform:
         </p>
         <ul>
-          <li>Website: <a href="https://ara-research.work" target="_blank">https://ara-research.work</a></li>
+          <li>Website: <a href="https://ara-research.work" target="_blank" rel="noopener">https://ara-research.work</a></li>
           <li>Email: <a href="mailto:koen@ara-research.work">koen@ara-research.work</a></li>
         </ul>
         <p style="font-size:0.9rem; color:#6b7280; margin-top:0.75rem;">
-          This page is provided as a public solution overview and reference link for
-          Google Cloud Partner solution qualification.
+          This page is provided as a public solution overview and architectural reference
+          for Google Cloud Partner solution qualification.
         </p>
       </section>
 
@@ -231,9 +534,26 @@
   <footer>
     &copy; <span id="year"></span> Ara Research. All rights reserved.
   </footer>
+</div>
 
-  <script>
-    document.getElementById("year").textContent = new Date().getFullYear();
-  </script>
+<script>
+  // Year in footer
+  document.getElementById("year").textContent = new Date().getFullYear();
+
+  // Simple scroll-in animation for sections
+  const observer = new IntersectionObserver(
+    entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("visible");
+          observer.unobserve(entry.target);
+        }
+      });
+    },
+    { threshold: 0.12 }
+  );
+
+  document.querySelectorAll("main section").forEach(sec => observer.observe(sec));
+</script>
 </body>
 </html>
